@@ -110,10 +110,8 @@ Cette feuille est probablement : SAULE
 ## Auteur
 
 **Nom** : [Gaspar da Rosa Francisco](https://github.com/Gasparfgf)
-**Année universitaire** : M2 - ALT - 2025
-**Projet** : Reconnaissance de formes
-**Langage** : Python
-**Encadrant** : Rémy Kessler
+
+**Project** : Reconnaissance de formes
 
 ---
 
