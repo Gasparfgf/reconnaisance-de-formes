@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import pandas as pd
 
 
 def extract_features(image_path):
@@ -44,3 +45,38 @@ def extract_features(image_path):
     ] + list(hu_moments)
 
     return features
+
+
+def build_dataset(dataset_path="dataset"):
+    classes = ["chene", "erable", "bouleau", "saule"]
+    data, labels = [], []
+
+    for cls in classes:
+        folder = os.path.join(dataset_path, cls)
+        if not os.path.isdir(folder):
+            print(f"Dossier introuvable : {folder}")
+            continue
+
+        for filename in os.listdir(folder):
+            path = os.path.join(folder, filename)
+            features = extract_features(path)
+            if features is not None:
+                data.append(features)
+                labels.append(cls)
+
+    columns = [
+        "area", "perimeter", "aspect_ratio", "extent",
+        "solidity", "compactness",
+        "hu1", "hu2", "hu3", "hu4", "hu5", "hu6", "hu7"
+    ]
+    df = pd.DataFrame(data, columns=columns)
+    df["label"] = labels
+
+    print(df.head())
+    print("\nNombre total d'images traitées :", len(df))
+
+    df.to_csv("feuilles_features.csv", index=False)
+    print("Dataset sauvegardé dans feuilles_features.csv")
+
+    return df
+
